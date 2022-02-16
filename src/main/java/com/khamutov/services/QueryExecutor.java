@@ -1,6 +1,6 @@
 package com.khamutov.services;
 
-import com.khamutov.main.Main;
+import com.khamutov.entities.Product;
 
 import java.sql.*;
 import java.util.List;
@@ -17,7 +17,7 @@ public class QueryExecutor {
 
     }
 
-    public List<Main.Product> getAllProducts() throws SQLException {
+    public List<Product> getAllProducts() throws SQLException {
         try (Connection connection = service.createConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * from products")

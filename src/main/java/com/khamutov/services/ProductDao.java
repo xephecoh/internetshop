@@ -1,10 +1,10 @@
 package com.khamutov.services;
 
-import com.khamutov.main.Main;
-import com.khamutov.services.QueryExecutor;
+import com.khamutov.entities.Product;
 
 import java.sql.SQLException;
 import java.util.List;
+
 
 public class ProductDao {
     private QueryExecutor queryExecutor;
@@ -13,7 +13,7 @@ public class ProductDao {
         this.queryExecutor = new QueryExecutor();
     }
 
-    public List<Main.Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         try {
             return queryExecutor.getAllProducts();
         } catch (SQLException e) {

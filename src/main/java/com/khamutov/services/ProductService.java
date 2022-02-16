@@ -1,6 +1,6 @@
 package com.khamutov.services;
 
-import com.khamutov.main.Main;
+import com.khamutov.entities.Product;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class ProductService {
     public ProductService(ProductDao productDao) {
         this.productDao = productDao;
     }
-    public List<Main.Product>  getProductList(){
+    public List<Product>  getProductList(){
         return productDao.getAllProducts();
     }
     public void  deleteById(int id){

@@ -1,10 +1,9 @@
 package com.khamutov.servlets;
 
-import com.khamutov.main.Main;
+import com.khamutov.entities.Product;
 import com.khamutov.services.ProductService;
 import com.khamutov.templater.PageGenerator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        List<Main.Product> productList = service.getProductList();
+        List<Product> productList = service.getProductList();
         PageGenerator pageGenerator = PageGenerator.instance();
         Map<String,Object> pageVariables = new HashMap<>();
         pageVariables.put("products",productList);

@@ -23,31 +23,8 @@ public class Main {
         context.addServlet(new ServletHolder(addProductServlet), "/save");
         Server server = new Server(8081);
         server.setHandler(context);
-
         server.start();
     }
 
-    public static class Product {
-        private int id;
-        private int price;
-        private String name;
 
-        public Product(int id, int price, String name) {
-            this.id = id;
-            this.price = price;
-            this.name = name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 }
