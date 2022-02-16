@@ -1,7 +1,6 @@
 package com.study.lab1.services;
 
 import java.util.Map;
-
 public class InitializeService {
     private static final String URL = "jdbc:postgresql://localhost:5432/test_DB";
     private static final String USER_NAME = "test_user";
