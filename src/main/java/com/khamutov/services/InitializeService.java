@@ -1,4 +1,4 @@
-package com.study.lab1.services;
+package com.khamutov.services;
 
 import java.util.Map;
 public class InitializeService {

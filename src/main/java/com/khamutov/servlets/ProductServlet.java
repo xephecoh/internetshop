@@ -1,6 +1,8 @@
-package com.study.lab1.servlets;
+package com.khamutov.servlets;
 
-import com.study.lab1.templater.PageGenerator;
+import com.khamutov.main.Main;
+import com.khamutov.services.ProductService;
+import com.khamutov.templater.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,7 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        List<Product> productList = service.getProductList();
+        List<Main.Product> productList = service.getProductList();
         PageGenerator pageGenerator = PageGenerator.instance();
         Map<String,Object> pageVariables = new HashMap<>();
         pageVariables.put("products",productList);
@@ -27,10 +29,4 @@ public class ProductServlet extends HttpServlet {
         resp.getWriter().println(page);
     }
 
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String parameter = req.getParameter("product.id");
-        service.deleteById(Integer.parseInt(parameter));
-    }
 }

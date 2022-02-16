@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Web 1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <#list products as product>
+           <td>${product.id}
+           <td>${product.name}
+           <td>${product.price}
+        <td>
+        <form action="/delete" method="POST">
+            <input type="hidden" name="id" value="{product.id}" ></form>
+            <input type="button" value="Delete" name="btn"></form>
+
+        <form action="/update" method="post">
+            <input type="hidden" value="{product.id}" name="id"></form>
+        <input type="button" value="Update" name="id"></form>
+        </td>
+
+    </tr>
+       </#list>
+    </tbody>
+</table>
+
+</body>
+</html>

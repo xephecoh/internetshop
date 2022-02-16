@@ -1,6 +1,6 @@
-package com.study.lab1.servlets;
+package com.khamutov.servlets;
 
-import com.study.lab1.templater.PageGenerator;
+import com.khamutov.templater.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

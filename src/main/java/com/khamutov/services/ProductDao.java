@@ -1,6 +1,7 @@
-package com.study.lab1.servlets;
+package com.khamutov.services;
 
-import com.study.lab1.services.QueryExecutor;
+import com.khamutov.main.Main;
+import com.khamutov.services.QueryExecutor;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ProductDao {
         this.queryExecutor = new QueryExecutor();
     }
 
-    public List<Product> getAllProducts() {
+    public List<Main.Product> getAllProducts() {
         try {
             return queryExecutor.getAllProducts();
         } catch (SQLException e) {
@@ -25,6 +26,23 @@ public class ProductDao {
             queryExecutor.deleteItem(id);
         } catch (SQLException e) {
             throw new RuntimeException("unable to delete",e);
+        }
+    }
+
+    public void update(int id) {
+        try {
+            queryExecutor.update(id);
+        } catch (SQLException e) {
+            throw new RuntimeException("unable to delete",e);
+        }
+    }
+
+    public void save(int id,String name,int price){
+
+        try {
+            queryExecutor.save(id,name,price);
+        } catch (SQLException e) {
+            throw new RuntimeException("unable to save",e);
         }
     }
 
