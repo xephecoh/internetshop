@@ -8,7 +8,6 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -20,20 +19,23 @@
     <tbody>
     <tr>
         <#list products as product>
-           <td>${product.id}
-           <td>${product.name}
-           <td>${product.price}
+        <td>${product.id}</td>
+        <td>${product.name}</td>
+        <td>${product.price}</td>
         <td>
-        <form action="/delete" method="POST">
-            <input type="hidden" name="id" value="{product.id}" ></form>
-            <input type="submit" value="Delete" name="btn"></form>
+            <form action="/delete" method="POST">
+                <input type="hidden" name="id" value="${product.id}">
+                <input type="submit" class="btn btn-danger" value="Delete" name="btn"
+               onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
 
-        <form action="/update" method="POST">
-            <input type="hidden" value="{product.id}" name="id"></form>
-        <input type="button" value="Update" name="id"></form>
+            <form action="/update" method="POST">
+                <input type="hidden" value="${product.id}" name="id">
+                <input type="hidden" value="${product.name}" name="name">
+                <input type="hidden" value="${product.price}" name="price">
+                <input type="submit" class="btn btn-primary" value="Update" name="btn"></form>
         </td>
     </tr>
-       </#list>
+    </#list>
     </tbody>
 </table>
 

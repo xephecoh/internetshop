@@ -29,11 +29,11 @@ public class ProductDao {
         }
     }
 
-    public void update(int id) {
+    public void update(int id,String name,int price) {
         try {
-            queryExecutor.update(id);
+            queryExecutor.update(id,name,price);
         } catch (SQLException e) {
-            throw new RuntimeException("unable to delete",e);
+            throw new RuntimeException("unable to update",e);
         }
     }
 

@@ -11,8 +11,12 @@ public class ConnectionService {
         service = new InitializeService();
     }
 
-    public  Connection createConnection() throws SQLException {
-        return  DriverManager.getConnection(service.getUrl(), service.getUserName(), service.getPassword());
+    public  Connection createConnection()  {
+        try {
+            return  DriverManager.getConnection(service.getUrl(), service.getUserName(), service.getPassword());
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to create connection");
+        }
     }
 
 }

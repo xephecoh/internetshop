@@ -29,19 +29,23 @@ public class QueryExecutor {
     public void deleteItem(int id) throws SQLException {
         try (Connection connection = service.createConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(
-                     "DELETE FROM products WHERE id = " + id + ";");
         ) {
+            int resultSet = statement.executeUpdate(
+                    "DELETE FROM products WHERE id = " + id + ";");
         }
 
     }
 
 
-    public void update(int id) throws SQLException {
+    public void update(int id,String name,int price) throws SQLException {
         try (Connection connection = service.createConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("DELETE FROM products WHERE id=" + id);
+
         ) {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE  product SET name = ? price = ? where id = ? ");
+            preparedStatement.setInt(3, id);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, price);
         }
     }
 

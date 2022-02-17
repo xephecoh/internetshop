@@ -14,13 +14,15 @@ public class Main {
         ProductService productService = new ProductService(productDao);
         ProductServlet productServlet = new ProductServlet(productService);
         DeleteProductServlet deleteProductServlet = new DeleteProductServlet(productService);
+        UpdateProductServlet updateProductServlet = new UpdateProductServlet(productService);
 
         AddProductServlet addProductServlet = new AddProductServlet(productService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(productServlet), "/products");
         context.addServlet(new ServletHolder(deleteProductServlet), "/delete");
-        context.addServlet(new ServletHolder(addProductServlet), "/save");
+        context.addServlet(new ServletHolder(addProductServlet), "/add");
+        context.addServlet(new ServletHolder(updateProductServlet), "/update");
         Server server = new Server(8081);
         server.setHandler(context);
         server.start();

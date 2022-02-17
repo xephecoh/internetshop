@@ -18,4 +18,7 @@ public class ProductService {
     public void save(int id,String name,int price){
         productDao.save(id,name,price);
     }
+    public void update(int id,String name,int price){
+        productDao.update(id,name,price);
+    }
 }
