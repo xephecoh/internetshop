@@ -30,14 +30,14 @@ public class QueryExecutor {
         try (Connection connection = service.createConnection();
              Statement statement = connection.createStatement();
         ) {
-            int resultSet = statement.executeUpdate(
+            statement.executeUpdate(
                     "DELETE FROM products WHERE id = " + id + ";");
         }
 
     }
 
 
-    public void update(int id,String name,int price) throws SQLException {
+    public void update(int id, String name, int price) throws SQLException {
         try (Connection connection = service.createConnection();
 
         ) {
@@ -52,6 +52,13 @@ public class QueryExecutor {
     public void save(int id, String name, int price) throws SQLException {
         try (Connection connection = service.createConnection();
         ) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM product WHERE id = " + id + ";");
+
+            if(resultSet.next()){
+                throw new SQLException("Id should be unique");
+            }
+
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO products VALUES (?,?,?)");
             preparedStatement.setInt(1, id);

@@ -15,6 +15,7 @@ public class Main {
         ProductServlet productServlet = new ProductServlet(productService);
         DeleteProductServlet deleteProductServlet = new DeleteProductServlet(productService);
         UpdateProductServlet updateProductServlet = new UpdateProductServlet(productService);
+        ResourcesServlet resourcesServlet = new ResourcesServlet();
 
         AddProductServlet addProductServlet = new AddProductServlet(productService);
 
@@ -23,6 +24,7 @@ public class Main {
         context.addServlet(new ServletHolder(deleteProductServlet), "/delete");
         context.addServlet(new ServletHolder(addProductServlet), "/add");
         context.addServlet(new ServletHolder(updateProductServlet), "/update");
+        context.addServlet(new ServletHolder(resourcesServlet), "/script/*");
         Server server = new Server(8081);
         server.setHandler(context);
         server.start();

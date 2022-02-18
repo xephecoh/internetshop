@@ -3,6 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+
+    <script>
+        function takeValue(){
+            let id = document.getElementById("id").value;
+            let name = document.getElementById("name").value;
+            let price = document.getElementById("price").value;
+            const http = new EasyHTTP;
+            const data = {
+                name: name,
+                id: id,
+                price: price
+            }
+            http.put(
+                'http://localhost:8081/update',
+                data)
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+
+        }
+    </script>
     <title>Save Customer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -23,15 +43,15 @@
             <tbody>
             <tr>
                 <td><label>Id:</label></td>
-                <td><input  value="${id}" name="id" /></td>
+                <td><input  value="${id}" name="id"  id="id"/></td>
             </tr>
             <tr>
                 <td><label>Name :</label></td>
-                <td><input value="${name}" name="name"/></td>
+                <td><input value="${name}" name="name" id="name"/></td>
             </tr>
             <tr>
                 <td><label>Price :</label></td>
-                <td><input  value="${price}" name="price"/></td>
+                <td><input  value="${price}" name="price" id="price"/></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Save" class="save" /></td>
@@ -43,6 +63,8 @@
 
 <label id = "msg"></label>
 
-<script src="src/main/resources/static/script/index.js"></script>
+<script src="/script/index.js"></script>
+<script src="/script/library.js"></script>
+<script src="/script/app.js"></script>
 </body>
 </html>
