@@ -4,13 +4,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 public class ContentLoader {
+    final private static String PATH =
+            String.valueOf(ContentLoader.class.getResource("/static/script")).replace("file:/", "");
 
     public static void writeScript(String uri, HttpServletResponse response) {
-         System.out.println( ContentLoader.class.getResource("/static/script" + uri));
         try (BufferedReader reader = new BufferedReader(
-                new FileReader(ContentLoader.class.getResource("/static/script") + uri))) {
-            //"src/main/resources/static/script" + uri
-            //String.valueOf(ContentLoader.class.getResource("target/classes/static/script" + uri)
+                new FileReader(PATH + uri))) {
             String line;
             response.setStatus(HttpServletResponse.SC_OK);
             Writer writer = response.getWriter();
