@@ -1,16 +1,14 @@
-$("#user-form").submit(function(event){
+$("#deleteForm").submit(function(event){
     event.preventDefault();
     const $form = $(this);
-    const url = 'http://localhost:8081/update';
     const productId = $form.find('input[name="id"]').val();
-    const productName = $form.find('input[name="name"]').val();
-    const productPrice = $form.find('input[name="price"]').val();
+    const url = 'http://localhost:8081/delete';
 
     $.ajax({
-        type : 'PUT',
+        type : 'DELETE',
         url : url,
         contentType: 'text/html',
-        data : {name: productName, price: productPrice, id: productId },
+        data : {id: productId },
         error : function(xhr, status, error){
             $('#msg').html('<span style=\'color:red;\'>'+error+'</span>')
         }

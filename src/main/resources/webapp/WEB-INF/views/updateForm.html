@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-
-    </script>
     <title>Update product</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -19,9 +16,10 @@
 </div>
 <div id="container">
     <h3>Update Product</h3>
-    <form id="userFrom">
+    <form id="user-form">
+        <input type="hidden" value="y" id="result">
         <label>Id:</label>
-        <input value="${id}" name="id" id="id"/><br>
+        <input value="${id}" name="id"/><br>
         <label>Name :</label>
         <input value="${name}" name="name" id="name"/></br>
         <label>Price :</label>
@@ -30,10 +28,9 @@
     </form>
 </div>
 
-<label id="msg"></label>
-
 <script src="/script/index.js"></script>
-<script src="/script/library.js"></script>
-<script src="/script/app.js"></script>
+<!--<script src="/script/sendandredirect.js"></script>-->
+<!--<script src="/script/app.js"></script>
+<script src="/script/library.js"></script>-->
 </body>
 </html>

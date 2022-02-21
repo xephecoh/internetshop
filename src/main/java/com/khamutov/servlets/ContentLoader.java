@@ -1,4 +1,4 @@
-package com.khamutov.services;
+package com.khamutov.servlets;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;

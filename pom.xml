@@ -13,6 +13,10 @@
         <jdbc.driver.version> 42.3.0 </jdbc.driver.version>
         <bretty.version> 1.2</bretty.version>
         <junit.jupiter.version>5.8.0-M1</junit.jupiter.version>
+        <mickito.junit.version>4.0.0</mickito.junit.version>
+        <freemarket.version>2.3.23</freemarket.version>
+        <flyway.version>8.5.0</flyway.version>
+        <h2.database.version>1.4.197</h2.database.version>
     </properties>
 
     <build>
@@ -31,20 +35,30 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.database.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${jdbc.driver.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mickito.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.20</version>
+            <version>${freemarket.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>

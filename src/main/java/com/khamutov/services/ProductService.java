@@ -1,24 +1,25 @@
 package com.khamutov.services;
 
+import com.khamutov.dao.ProductDao;
 import com.khamutov.entities.Product;
 
 import java.util.List;
 
 public class ProductService {
-    private ProductDao productDao;
+    private final ProductDao productDao;
     public ProductService(ProductDao productDao) {
         this.productDao = productDao;
     }
     public List<Product>  getProductList(){
-        return productDao.getAllProducts();
+        return (List<Product>) productDao.findAllProducts();
     }
     public void  deleteById(int id){
-        productDao.deleteById(id);
+        productDao.delete(id);
     }
-    public void save(int id,String name,int price){
-        productDao.save(id,name,price);
+    public void save(Product product){
+        productDao.save(product);
     }
-    public void update(int id,String name,int price){
-        productDao.update(id,name,price);
+    public boolean update(Product product){
+        return productDao.update(product);
     }
 }

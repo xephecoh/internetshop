@@ -6,12 +6,7 @@
     <title>Web 1</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script>
-        function takeValue(){
-            document.getElementById()
-        }
 
-    </script>
 </head>
 <body>
 <table class="table table-bordered table-striped">
@@ -23,16 +18,16 @@
     </tr>
     </thead>
     <tbody>
-        <#list products as product>
+    <#list products as product>
     <tr>
         <td>${product.id}</td>
         <td>${product.name}</td>
         <td>${product.price}</td>
         <td>
-            <form action="/delete" method="POST">
-                <input type="hidden" name="id" value="${product.id}">
+            <form id="deleteForm"> <!--action="/delete" method="POST"-->
+                <input type="hidden" name="id" value="${product.id}" id="id">
                 <input type="submit" class="btn btn-danger" value="Delete" name="btn"
-               onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
+                       onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
 
             <form action="/update" method="POST">
                 <input type="hidden" value="${product.id}" name="id">
@@ -44,6 +39,6 @@
     </#list>
     </tbody>
 </table>
-
+<script src="/script/delete.js"></script>
 </body>
 </html>

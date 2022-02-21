@@ -5,10 +5,23 @@ public  class Product {
     private int price;
     private String name;
 
-    public Product(int id, int price, String name) {
+    public Product(int id, String name,int price) {
         this.id = id;
-        this.price = price;
         this.name = name;
+        this.price = price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Product() {
     }
 
     public int getId() {

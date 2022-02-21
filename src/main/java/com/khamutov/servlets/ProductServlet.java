@@ -21,11 +21,9 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         List<Product> productList = service.getProductList();
-        PageGenerator pageGenerator = PageGenerator.instance();
         Map<String,Object> pageVariables = new HashMap<>();
         pageVariables.put("products",productList);
-        String page = pageGenerator.getPage("products.html",pageVariables);
-        resp.getWriter().println(page);
+        PageGenerator.getPage("products.html",pageVariables,resp.getWriter());
     }
 
 }
