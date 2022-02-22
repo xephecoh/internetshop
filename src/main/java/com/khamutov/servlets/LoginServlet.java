@@ -26,9 +26,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UUID token = UUID.randomUUID();
-        Cookie cookie = new Cookie("token", token.toString());
-
         Map<String, Object> pageVariables = new HashMap<>();
         PageGenerator.getPage("login.html", pageVariables, resp.getWriter());
     }

@@ -12,6 +12,7 @@ public class PropertiesReader {
         properties = new Properties();
         readProperties(path);
     }
+
     private void readProperties(String path) {
         try (FileReader inputStream = new FileReader(path)) {
             properties.load(inputStream);
@@ -19,6 +20,7 @@ public class PropertiesReader {
             throw new RuntimeException("Can not read properties from " + path);
         }
     }
+
     public Properties getProperties() {
         return properties;
     }

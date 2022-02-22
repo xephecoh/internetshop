@@ -5,10 +5,12 @@ import java.util.List;
 
 public class CookiesService {
     private static CookiesService instance;
-    private final static List<String> cookiesList = new ArrayList<>();
+
+    private final static List<String> cookiesList = new ArrayList();
     public CookiesService() {
+
     }
-    public List<String> getTokenList() {
+    public synchronized List<String> getTokenList() {
         return cookiesList;
     }
     public static CookiesService getInstance() {

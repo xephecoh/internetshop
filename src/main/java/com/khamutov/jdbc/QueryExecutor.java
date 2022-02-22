@@ -1,8 +1,9 @@
 package com.khamutov.jdbc;
 
 import com.khamutov.dao.ConnectionFactory;
+import com.khamutov.dao.MyH2DataSource;
 import com.khamutov.entities.Product;
-import com.khamutov.jdbc.RowMapper;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,17 +16,17 @@ public class QueryExecutor {
     private static final String UPDATE_PRODUCT_QUERY = "UPDATE  products SET name = ? ,price = ? where id = ? ";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM products WHERE id = ?;";
     private static final String INSERT_PRODUCT_QUERY = "INSERT INTO products VALUES (?,?,?)";
-    private final ConnectionFactory connectionFactory;
+    private final MyH2DataSource myH2DataSource;
     private final RowMapper mapper;
 
 
-    public QueryExecutor(ConnectionFactory connectionFactory) {
+    public QueryExecutor(MyH2DataSource dataSource) {
         this.mapper = new RowMapper();
-        this.connectionFactory = connectionFactory;
+        this.myH2DataSource = dataSource;
     }
 
     public List<Product> getAllProducts() {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = myH2DataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(ALL_PRODUCT_QUERY)
         ) {
@@ -41,7 +42,7 @@ public class QueryExecutor {
     }
 
     public void deleteItem(int id) {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = myH2DataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
         ) {
             preparedStatement.setInt(1, id);
@@ -52,7 +53,7 @@ public class QueryExecutor {
     }
 
     public boolean update(Product product) {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = myH2DataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      UPDATE_PRODUCT_QUERY);
         ) {
@@ -67,7 +68,7 @@ public class QueryExecutor {
     }
 
     public void save(Product product) {
-        try (Connection connection = connectionFactory.getConnection();
+        try (Connection connection = myH2DataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
              PreparedStatement preparedStatement = connection.prepareStatement(
                      INSERT_PRODUCT_QUERY);
