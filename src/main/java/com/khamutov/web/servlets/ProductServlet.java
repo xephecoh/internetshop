@@ -1,4 +1,4 @@
-package com.khamutov.servlets;
+package com.khamutov.web.servlets;
 
 import com.khamutov.entities.Product;
 import com.khamutov.services.ProductService;

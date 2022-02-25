@@ -1,8 +1,9 @@
-package com.khamutov.servlets;
+package com.khamutov.web.servlets;
 
 import com.khamutov.entities.Product;
-import com.khamutov.services.CookiesService;
+import com.khamutov.web.security.SecurityService;
 import com.khamutov.services.ProductService;
+import com.khamutov.web.RequestBodyParser;
 import com.khamutov.templater.PageGenerator;
 
 import javax.servlet.http.Cookie;
@@ -26,21 +27,14 @@ public class UpdateProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
-                if (CookiesService.getInstance().getTokenList().contains(cookie.getValue())) {
-                    String id = req.getParameter("id");
-                    String name = req.getParameter("name");
-                    String price = req.getParameter("price");
-                    Map<String, Object> pageVariables = new HashMap<>();
-                    pageVariables.put("id", id);
-                    pageVariables.put("name", name);
-                    pageVariables.put("price", price);
-                    PageGenerator.getPage("updateForm.html", pageVariables, resp.getWriter());
-                } else resp.sendRedirect("/login");
-            }
-        }
+        String id = req.getParameter("id");
+        String name = req.getParameter("name");
+        String price = req.getParameter("price");
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("id", id);
+        pageVariables.put("name", name);
+        pageVariables.put("price", price);
+        PageGenerator.getPage("updateForm.html", pageVariables, resp.getWriter());
     }
 
     @Override

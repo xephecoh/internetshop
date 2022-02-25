@@ -1,17 +1,13 @@
-package com.khamutov.servlets;
+package com.khamutov.web;
 
 
 import com.khamutov.entities.Product;
 
 public class RequestBodyParser {
-    Product product;
-
     public RequestBodyParser() {
-        this.product = new Product();
     }
 
     final String[] requestValues = new String[5];
-
 
     public RequestBodyParser parseRequest(String requestBody) {
         int counter = 0;
@@ -24,7 +20,9 @@ public class RequestBodyParser {
         }
         return this;
     }
+
     public Product getProduct() {
+        Product product = new Product();
         product.setName(requestValues[0]);
         product.setPrice(Integer.parseInt(requestValues[1]));
         product.setId(Integer.parseInt(requestValues[2]));

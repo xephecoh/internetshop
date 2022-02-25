@@ -17,6 +17,7 @@
         <freemarket.version>2.3.23</freemarket.version>
         <flyway.version>8.5.0</flyway.version>
         <h2.database.version>1.4.197</h2.database.version>
+        <lombok.version>1.18.22 </lombok.version>
     </properties>
 
     <build>
@@ -34,6 +35,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>

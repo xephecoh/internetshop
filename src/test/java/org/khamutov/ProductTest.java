@@ -2,7 +2,7 @@ package org.khamutov;
 
 import com.khamutov.entities.Product;
 import com.khamutov.jdbc.RowMapper;
-import com.khamutov.servlets.RequestBodyParser;
+import com.khamutov.web.RequestBodyParser;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

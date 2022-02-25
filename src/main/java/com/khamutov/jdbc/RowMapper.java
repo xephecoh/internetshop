@@ -12,7 +12,6 @@ public class RowMapper {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         int price = resultSet.getInt("price");
-        Product product = new Product(id, name, price);
-        return product;
+        return new Product(id, name, price);
     }
 }

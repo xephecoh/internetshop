@@ -1,6 +1,6 @@
-package com.khamutov.servlets;
+package com.khamutov.web.servlets;
 
-import com.khamutov.services.CookiesService;
+import com.khamutov.web.security.SecurityService;
 import com.khamutov.services.ProductService;
 import com.khamutov.templater.PageGenerator;
 
@@ -12,14 +12,12 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import java.util.Map;
-import java.util.UUID;
 
 public class LoginServlet extends HttpServlet {
-    private ProductService productService;
-    private CookiesService service;
+    private SecurityService service;
 
-    public LoginServlet(ProductService productService, CookiesService service) {
-        this.productService = productService;
+
+    public LoginServlet( SecurityService service) {
         this.service = service;
     }
 
@@ -34,13 +32,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("username");
         String pass = req.getParameter("password");
-        if (name.equals("username") & pass.equals("password")) {
-            UUID token = UUID.randomUUID();
-            Cookie cookie = new Cookie("token", token.toString());
-            System.out.println(cookie.getValue());
+        if (service.validateUser(name,pass)) {
+            Cookie cookie = service.generateCookie();
             resp.addCookie(cookie);
-            CookiesService.getInstance().getTokenList().add(token.toString());
-            System.out.println(CookiesService.getInstance().getTokenList().get(0));
             resp.sendRedirect("/products");
             return;
         }

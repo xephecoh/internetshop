@@ -1,4 +1,6 @@
-package com.khamutov.servlets;
+package com.khamutov.web.servlets;
+
+import com.khamutov.web.ContentLoader;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

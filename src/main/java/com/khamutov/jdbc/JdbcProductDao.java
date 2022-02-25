@@ -1,19 +1,16 @@
 package com.khamutov.jdbc;
 
-import com.khamutov.dao.ConnectionFactory;
-import com.khamutov.dao.MyH2DataSource;
 import com.khamutov.dao.ProductDao;
 import com.khamutov.entities.Product;
-import com.khamutov.jdbc.QueryExecutor;
+import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 
 public class JdbcProductDao implements ProductDao {
     private final QueryExecutor queryExecutor;
 
-    public JdbcProductDao(MyH2DataSource dataSource) {
+    public JdbcProductDao(PGSimpleDataSource dataSource) {
         this.queryExecutor = new QueryExecutor(dataSource);
     }
 

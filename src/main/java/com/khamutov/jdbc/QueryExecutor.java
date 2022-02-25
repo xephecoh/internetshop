@@ -1,8 +1,7 @@
 package com.khamutov.jdbc;
 
-import com.khamutov.dao.ConnectionFactory;
-import com.khamutov.dao.MyH2DataSource;
 import com.khamutov.entities.Product;
+import org.postgresql.ds.PGSimpleDataSource;
 
 
 import java.sql.*;
@@ -16,17 +15,17 @@ public class QueryExecutor {
     private static final String UPDATE_PRODUCT_QUERY = "UPDATE  products SET name = ? ,price = ? where id = ? ";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM products WHERE id = ?;";
     private static final String INSERT_PRODUCT_QUERY = "INSERT INTO products VALUES (?,?,?)";
-    private final MyH2DataSource myH2DataSource;
+    private final PGSimpleDataSource postgresDataSources;
     private final RowMapper mapper;
 
 
-    public QueryExecutor(MyH2DataSource dataSource) {
+    public QueryExecutor(PGSimpleDataSource dataSource) {
         this.mapper = new RowMapper();
-        this.myH2DataSource = dataSource;
+        this.postgresDataSources = dataSource;
     }
 
     public List<Product> getAllProducts() {
-        try (Connection connection = myH2DataSource.getConnection();
+        try (Connection connection = postgresDataSources.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(ALL_PRODUCT_QUERY)
         ) {
@@ -42,8 +41,8 @@ public class QueryExecutor {
     }
 
     public void deleteItem(int id) {
-        try (Connection connection = myH2DataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY);
+        try (Connection connection = postgresDataSources.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT_QUERY)
         ) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -53,9 +52,9 @@ public class QueryExecutor {
     }
 
     public boolean update(Product product) {
-        try (Connection connection = myH2DataSource.getConnection();
+        try (Connection connection = postgresDataSources.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     UPDATE_PRODUCT_QUERY);
+                     UPDATE_PRODUCT_QUERY)
         ) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
@@ -68,10 +67,10 @@ public class QueryExecutor {
     }
 
     public void save(Product product) {
-        try (Connection connection = myH2DataSource.getConnection();
+        try (Connection connection = postgresDataSources.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID_QUERY);
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     INSERT_PRODUCT_QUERY);
+                     INSERT_PRODUCT_QUERY)
         ) {
             statement.setInt(1, product.getId());
             ResultSet resultSet = statement.executeQuery();

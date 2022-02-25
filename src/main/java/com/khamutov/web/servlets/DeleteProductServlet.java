@@ -1,4 +1,4 @@
-package com.khamutov.servlets;
+package com.khamutov.web.servlets;
 
 
 

@@ -29,10 +29,10 @@ public class MyH2DataSource implements DataSource {
         try {
             lock.lock();
             if (connection == null) {
-                connection = (ConnectionWrapper) DriverManager.getConnection(
+                connection = new ConnectionWrapper( DriverManager.getConnection(
                         url,
                         username,
-                        password);
+                        password));
             }
             while (!connection.isNotInUse) ;
             connection.isNotInUse = false;
@@ -43,9 +43,14 @@ public class MyH2DataSource implements DataSource {
         }
     }
 
-    public static class ConnectionWrapper implements Connection {
+
+    public  class ConnectionWrapper implements Connection {
         Connection connection;
         boolean isNotInUse;
+
+        public ConnectionWrapper(Connection connection){
+            this.connection = connection;
+        }
 
         @Override
         public Statement createStatement() throws SQLException {
