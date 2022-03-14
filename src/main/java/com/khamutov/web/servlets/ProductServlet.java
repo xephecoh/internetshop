@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductServlet extends HttpServlet {
-    private ProductService service;
+    private final ProductService service;
     public ProductServlet(ProductService productService) {
         this.service = productService;
     }

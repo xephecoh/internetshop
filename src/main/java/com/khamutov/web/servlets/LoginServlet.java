@@ -1,23 +1,20 @@
 package com.khamutov.web.servlets;
 
 import com.khamutov.web.security.SecurityService;
-import com.khamutov.services.ProductService;
 import com.khamutov.templater.PageGenerator;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-
 import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
-    private SecurityService service;
+    private final SecurityService service;
 
 
-    public LoginServlet( SecurityService service) {
+    public LoginServlet(SecurityService service) {
         this.service = service;
     }
 

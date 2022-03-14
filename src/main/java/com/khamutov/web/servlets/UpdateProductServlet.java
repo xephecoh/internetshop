@@ -1,12 +1,9 @@
 package com.khamutov.web.servlets;
 
 import com.khamutov.entities.Product;
-import com.khamutov.web.security.SecurityService;
 import com.khamutov.services.ProductService;
 import com.khamutov.web.RequestBodyParser;
 import com.khamutov.templater.PageGenerator;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
