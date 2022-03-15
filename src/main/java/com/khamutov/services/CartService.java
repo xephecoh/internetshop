@@ -18,7 +18,7 @@ public class CartService {
     }
 
     public void deleteProductFromCart(String userName,String productName){
-        cartDao.deleteFromCart(productName,userName);
+        cartDao.deleteFromCart(userName,productName);
     }
 
 }

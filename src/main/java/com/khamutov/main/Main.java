@@ -48,17 +48,19 @@ public class Main {
         flyway.migrate();
 
 
+
         JdbcCartDao jdbcCartDao = new JdbcCartDao(dataSource);
-        CartService cartService = new CartService(jdbcCartDao);
         UserDao userDao = new JdbcUserDao(dataSource);
-        UserService userService = new UserService(userDao);
+        CartService cartService = new CartService(jdbcCartDao);
+        ProductDao jdbcProductDao = new JdbcProductDao(dataSource);
         SecurityService securityService = new SecurityService(userDao);
         TokenFilter tokenFilter = new TokenFilter(securityService);
-        ProductDao jdbcProductDao = new JdbcProductDao(dataSource);
+        UserService userService = new UserService(userDao);
         ProductService productService = new ProductService(jdbcProductDao);
         ProductServlet productServlet = new ProductServlet(productService, cartService);
         DeleteProductServlet deleteProductServlet = new DeleteProductServlet(productService);
         UpdateProductServlet updateProductServlet = new UpdateProductServlet(productService);
+        DeleteFromCartServlet deleteFromCartServlet = new DeleteFromCartServlet(cartService);
         LoginServlet loginServlet = new LoginServlet(securityService);
         ResourcesServlet resourcesServlet = new ResourcesServlet();
         AddProductServlet addProductServlet = new AddProductServlet(productService);
@@ -79,6 +81,7 @@ public class Main {
         context.addServlet(new ServletHolder(loginServlet), "/login");
         context.addServlet(new ServletHolder(resourcesServlet), "/script/*");
         context.addServlet(new ServletHolder(registerServlet), "/register");
+        context.addServlet(new ServletHolder(deleteFromCartServlet), "/deleteFromCart");
         Server server = new Server(8081);
         server.setHandler(context);
         server.start();

@@ -14,7 +14,7 @@ public class JdbcCartDao implements CartDao {
     private final RowMapper rowMapper;
     private static final String INSERT_ITEM_TO_CART = "INSERT INTO users_carts VALUES (?,?,?)";
     private static final String GET_USER_CART = "SELECT * FROM users_carts WHERE user_name = ?";
-    private static final String DELETE_ITEM_FROM_CART = "DELETE from users_carts WHERE user_name = ?,product_name = ?";
+    private static final String DELETE_ITEM_FROM_CART = "DELETE from users_carts WHERE user_name = ? and product_name = ?";
     private final PGSimpleDataSource postgresDataSources;
 
     public JdbcCartDao(PGSimpleDataSource dataSource) {
@@ -56,7 +56,7 @@ public class JdbcCartDao implements CartDao {
     }
 
     @Override
-    public void deleteFromCart(String itemName, String userName) {
+    public void deleteFromCart(String userName, String itemName) {
         try (Connection connection = postgresDataSources.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ITEM_FROM_CART);
         ) {
@@ -65,7 +65,7 @@ public class JdbcCartDao implements CartDao {
             statement.executeQuery();
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Unable to delete" + e.getMessage());
         }
 
     }

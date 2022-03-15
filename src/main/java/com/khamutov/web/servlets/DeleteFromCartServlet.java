@@ -21,13 +21,13 @@ public class DeleteFromCartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String productName = req.getParameter("name");
+        String productName = req.getParameter("productName");
         Cookie[] cookies = req.getCookies();
         Optional<String> userName = Stream.of(cookies)
                 .filter(e -> e.getName().equals("userName"))
                 .map(Cookie::getValue)
                 .findAny();
-        userName.ifPresent(name -> cartService.deleteProductFromCart(productName, name));
+        userName.ifPresent(name -> cartService.deleteProductFromCart(name, productName));
         resp.sendRedirect("/products");
     }
 
