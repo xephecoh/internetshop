@@ -4,7 +4,7 @@ import com.khamutov.jdbc.dao.UserDao;
 
 
 public class UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;

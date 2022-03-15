@@ -83,7 +83,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public String getUserRole(String name) {
         try (Connection connection = pgSimpleDataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_USER_ROLE);
+             PreparedStatement statement = connection.prepareStatement(GET_USER_ROLE)
         ) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();

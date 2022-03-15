@@ -25,7 +25,7 @@ public class JdbcCartDao implements CartDao {
     @Override
     public void addToCart(String userName, String productName, int productPrice) {
         try (Connection connection = postgresDataSources.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_ITEM_TO_CART);
+             PreparedStatement statement = connection.prepareStatement(INSERT_ITEM_TO_CART)
         ) {
             statement.setString(1, userName);
             statement.setString(2, productName);
@@ -39,7 +39,7 @@ public class JdbcCartDao implements CartDao {
     @Override
     public List<Product> getUserCart(String userName) {
         try (Connection connection = postgresDataSources.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_USER_CART);
+             PreparedStatement statement = connection.prepareStatement(GET_USER_CART)
         ) {
             statement.setString(1, userName);
             ResultSet resultSet = statement.executeQuery();
@@ -58,7 +58,7 @@ public class JdbcCartDao implements CartDao {
     @Override
     public void deleteFromCart(String userName, String itemName) {
         try (Connection connection = postgresDataSources.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_ITEM_FROM_CART);
+             PreparedStatement statement = connection.prepareStatement(DELETE_ITEM_FROM_CART)
         ) {
             statement.setString(1, userName);
             statement.setString(2, itemName);
