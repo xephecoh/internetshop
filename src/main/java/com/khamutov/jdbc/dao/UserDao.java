@@ -1,6 +1,8 @@
-package com.khamutov.dao;
+package com.khamutov.jdbc.dao;
 
 public interface UserDao {
     boolean isUserValid(String name, String password);
     void saveUser(String name,String password);
+
+    String getUserRole(String name);
 }

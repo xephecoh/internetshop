@@ -1,6 +1,6 @@
 package com.khamutov.services;
 
-import com.khamutov.dao.UserDao;
+import com.khamutov.jdbc.dao.UserDao;
 
 
 public class UserService {
@@ -13,4 +13,5 @@ public class UserService {
     public void saveUser(String name,String password){
         userDao.saveUser(name,password);
     }
+
 }

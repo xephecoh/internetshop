@@ -9,6 +9,39 @@
 
 </head>
 <body>
+    <#if userCart?has_content>
+<div >
+    <h2>Items of your cart</h2>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>name</th>
+        <th>price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <#list userCart as item>
+    <tr>
+        <td>${item.name}</td>
+        <td>${item.price}</td>
+        <td>
+            <form id="deleteItemForm"> <!--action="/delete" method="POST"-->
+                <input type="hidden" name="id" value="${item.name}" >
+                <input type="submit" class="btn btn-danger" value="Delete" name="btn"
+                       onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
+        </td>
+    </tr>
+    </#list>
+    </tbody>
+</table>
+</#if>
+<label>
+    <div >
+        <h2>Online shop product list</h2>
+    </div>
+</label>
+
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -26,19 +59,28 @@
         <td>
             <form id="deleteForm"> <!--action="/delete" method="POST"-->
                 <input type="hidden" name="id" value="${product.id}" id="id">
+                <#if userRole == 'admin'>
                 <input type="submit" class="btn btn-danger" value="Delete" name="btn"
                        onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
-
+                </#if>
             <form action="/update" method="POST">
                 <input type="hidden" value="${product.id}" name="id">
                 <input type="hidden" value="${product.name}" name="name">
                 <input type="hidden" value="${product.price}" name="price">
-                <input type="submit" class="btn btn-primary" value="Update" name="btn"></form>
+                <#if userRole == 'admin'>
+                <input type="submit" class="btn btn-primary" id="updateButton"  value="Update" name="updateButton"></form>
+                </#if>
+            <form action="/products" method="POST">
+                <input type="hidden" value="${product.id}" name="id">
+                <input type="hidden" value="${product.name}" name="name">
+                <input type="hidden" value="${product.price}" name="price">
+                <input type="submit" class="btn btn-primary" id="addButton"  value="AddToCart" name="updateButton"></form>
         </td>
     </tr>
     </#list>
     </tbody>
 </table>
+
 <script src="/script/delete.js"></script>
 </body>
 </html>

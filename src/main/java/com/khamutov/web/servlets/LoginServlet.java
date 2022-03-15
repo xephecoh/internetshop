@@ -30,8 +30,13 @@ public class LoginServlet extends HttpServlet {
         String name = req.getParameter("username");
         String pass = req.getParameter("password");
         if (service.validateUser(name,pass)) {
-            Cookie cookie = service.generateCookie();
-            resp.addCookie(cookie);
+            String userRole = service.getUserRole(name);
+            Cookie cookieWithToken = service.generateCookie();
+            Cookie cookieWithRole = service.addUserRole(userRole);
+            Cookie userName = new Cookie("userName", name);
+            resp.addCookie(userName);
+            resp.addCookie(cookieWithToken);
+            resp.addCookie(cookieWithRole);
             resp.sendRedirect("/products");
             return;
         }

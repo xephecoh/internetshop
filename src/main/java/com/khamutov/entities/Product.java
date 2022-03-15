@@ -11,6 +11,11 @@ public class Product {
         this.price = price;
     }
 
+    public Product(int price, String name) {
+        this.price = price;
+        this.name = name;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

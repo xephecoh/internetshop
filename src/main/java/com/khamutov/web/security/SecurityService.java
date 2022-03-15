@@ -1,6 +1,6 @@
 package com.khamutov.web.security;
 
-import com.khamutov.dao.UserDao;
+import com.khamutov.jdbc.dao.UserDao;
 import com.khamutov.entities.Token;
 
 import javax.servlet.http.Cookie;
@@ -27,10 +27,17 @@ public class SecurityService implements Runnable {
         getTokenList().add(token);
         return cookie;
     }
+    public Cookie addUserRole(String role) {
+        return new Cookie("userRole", role);
+    }
 
 
     public boolean validateUser(String name, String password) {
         return jdbcUserDao.isUserValid(name, password);
+    }
+
+    public String getUserRole(String name) {
+        return jdbcUserDao.getUserRole(name);
     }
 
 
@@ -45,12 +52,11 @@ public class SecurityService implements Runnable {
 
     private boolean recalculateList(Long creationTimestamp) {
         long tokenLifeTime = new Timestamp(System.currentTimeMillis()).getTime() - creationTimestamp;
-        return tokenLifeTime > 10;
+        return tokenLifeTime > 600;
     }
 
     @Override
     public void run() {
-        System.out.println("From thread" + Thread.currentThread().getName());
         tokenList.stream()
                 .filter(e -> recalculateList(e.getCreationTimestamp()))
                 .forEach(tokenList::remove);

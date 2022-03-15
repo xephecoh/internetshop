@@ -1,6 +1,6 @@
 package com.khamutov.jdbc;
 
-import com.khamutov.dao.UserDao;
+import com.khamutov.jdbc.dao.UserDao;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.nio.charset.StandardCharsets;
@@ -10,10 +10,11 @@ import java.sql.*;
 
 
 public class JdbcUserDao implements UserDao {
-    PGSimpleDataSource pgSimpleDataSource;
-    final static String GET_USER = "SELECT * FROM users WHERE user_name = ? AND user_password = ?";
-    final static String INSERT_USER = "INSERT INTO users (id,user_name,user_password) VALUES (10,?,?)";
-    final static String GET_USER_BY_NAME = "SELECT * FROM users WHERE user_name = ?";
+    private final PGSimpleDataSource pgSimpleDataSource;
+    private final static String GET_USER = "SELECT * FROM users WHERE user_name = ? AND user_password = ?";
+    private final static String INSERT_USER = "INSERT INTO users (id,user_name,user_password) VALUES (10,?,?)";
+    private final static String GET_USER_BY_NAME = "SELECT * FROM users WHERE user_name = ?";
+    private final static String GET_USER_ROLE = "SELECT user_role FROM users WHERE user_name = ?";
 
 
     public JdbcUserDao(PGSimpleDataSource pgSimpleDataSource) {
@@ -55,7 +56,7 @@ public class JdbcUserDao implements UserDao {
     public void saveUser(String name, String password) {
         try (Connection connection = pgSimpleDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_USER);
-             PreparedStatement statement1 = connection.prepareStatement(GET_USER_BY_NAME);
+             PreparedStatement statement1 = connection.prepareStatement(GET_USER_BY_NAME)
         ) {
             statement1.setString(1, name);
             int rowsAffected = statement1.executeUpdate();
@@ -77,5 +78,27 @@ public class JdbcUserDao implements UserDao {
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public String getUserRole(String name) {
+        try (Connection connection = pgSimpleDataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_USER_ROLE);
+        ) {
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String userRole = resultSet.getString("user_role");
+                if (userRole == null) {
+                    throw new RuntimeException("No user with name " + name);
+                } else {
+                    return userRole;
+                }
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        throw new RuntimeException("No user with name " + name);
     }
 }

@@ -14,4 +14,9 @@ public class RowMapper {
         int price = resultSet.getInt("price");
         return new Product(id, name, price);
     }
+    public Product getCartProduct(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("product_name");
+        int price = resultSet.getInt("product_price");
+        return new Product(price, name);
+    }
 }

@@ -1,6 +1,6 @@
 package com.khamutov.jdbc;
 
-import com.khamutov.dao.ProductDao;
+import com.khamutov.jdbc.dao.ProductDao;
 import com.khamutov.entities.Product;
 import org.postgresql.ds.PGSimpleDataSource;
 

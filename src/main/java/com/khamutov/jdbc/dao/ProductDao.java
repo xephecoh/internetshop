@@ -1,4 +1,4 @@
-package com.khamutov.dao;
+package com.khamutov.jdbc.dao;
 
 import com.khamutov.entities.Product;
 
