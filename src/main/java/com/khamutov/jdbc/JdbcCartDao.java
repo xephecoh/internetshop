@@ -30,7 +30,7 @@ public class JdbcCartDao implements CartDao {
             statement.setString(1, userName);
             statement.setString(2, productName);
             statement.setInt(3, productPrice);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Unable to save product to cart " + e.getMessage());
         }
@@ -62,7 +62,7 @@ public class JdbcCartDao implements CartDao {
         ) {
             statement.setString(1, userName);
             statement.setString(2, itemName);
-            statement.executeQuery();
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Unable to delete" + e.getMessage());
