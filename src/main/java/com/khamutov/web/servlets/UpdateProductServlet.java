@@ -1,26 +1,23 @@
 package com.khamutov.web.servlets;
 
 import com.khamutov.entities.Product;
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.services.ProductService;
 import com.khamutov.web.RequestBodyParser;
-import com.khamutov.templater.PageGenerator;
+import com.khamutov.web.templater.PageGenerator;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Provider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UpdateProductServlet extends HttpServlet {
-    private final ProductService service;
-    private final RequestBodyParser requestBodyParser;
+    private final ProductService service = ServiceLocator.get(ProductService.class);
+    private final RequestBodyParser requestBodyParser = new RequestBodyParser();
 
-    public UpdateProductServlet(ProductService productService) {
-        this.service = productService;
-        requestBodyParser = new RequestBodyParser();
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

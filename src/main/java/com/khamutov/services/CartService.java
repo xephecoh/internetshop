@@ -1,5 +1,6 @@
 package com.khamutov.services;
 
+import com.khamutov.entities.CartItem;
 import com.khamutov.entities.Product;
 import com.khamutov.jdbc.dao.CartDao;
 
@@ -10,10 +11,10 @@ public class CartService {
     public CartService(CartDao cartDao) {
         this.cartDao = cartDao;
     }
-    public void addToCart(String userName, String productName, int productPrice){
-        cartDao.addToCart(userName,productName,productPrice);
+    public void addToCart(CartItem cartItem,String userName){
+        cartDao.addToCart(cartItem,userName);
     }
-    public List<Product> getUserCart(String userName){
+    public List<CartItem> getUserCart(String userName){
         return cartDao.getUserCart(userName);
     }
 

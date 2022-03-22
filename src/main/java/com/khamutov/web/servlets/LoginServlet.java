@@ -1,7 +1,9 @@
 package com.khamutov.web.servlets;
 
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.web.security.SecurityService;
-import com.khamutov.templater.PageGenerator;
+import com.khamutov.web.templater.PageGenerator;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginServlet extends HttpServlet {
-    private final SecurityService service;
-
-
-    public LoginServlet(SecurityService service) {
-        this.service = service;
-    }
+    private final SecurityService securityService = ServiceLocator.get(SecurityService.class);
 
 
     @Override
@@ -29,17 +26,17 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("username");
         String pass = req.getParameter("password");
-        if (service.validateUser(name,pass)) {
-            String userRole = service.getUserRole(name);
-            Cookie cookieWithToken = service.generateCookie();
-            Cookie cookieWithRole = service.addUserRole(userRole);
-            Cookie userName = new Cookie("userName", name);
-            resp.addCookie(userName);
-            resp.addCookie(cookieWithToken);
-            resp.addCookie(cookieWithRole);
-            resp.sendRedirect("/products");
+        boolean login = securityService.login(name, pass);
+        Map<String, Object> pageVariables = new HashMap<>();
+        if (!login) {
+            pageVariables.put("rejected", "true");
+            PageGenerator.getPage("login.html", pageVariables, resp.getWriter());
             return;
         }
-        resp.sendRedirect("/login");
+        Cookie cookieWithToken = securityService.generateCookie(name);
+        Cookie userName = new Cookie("userName", name);
+        resp.addCookie(userName);
+        resp.addCookie(cookieWithToken);
+        resp.sendRedirect("/products");
     }
 }

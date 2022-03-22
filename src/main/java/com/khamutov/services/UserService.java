@@ -14,4 +14,12 @@ public class UserService {
         userDao.saveUser(name,password);
     }
 
+    public boolean isUserValid(String name,String password){
+        System.out.println("inside user service");
+        return userDao.isUserValid(name,password);
+    }
+    public String getUserRole(String name){
+        return userDao.getUserRole(name);
+    }
+
 }

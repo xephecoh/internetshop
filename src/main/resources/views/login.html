@@ -31,6 +31,12 @@
                     <form id="register-form" class="form"  method="get" action="/register">
                         <input type="submit" name="submit" class="btn btn-primary" value="Register now!!">
                     </form>
+
+                    <#if rejected??>
+                    <#if rejected == 'true'>
+                    <label style="color:red">Wrong name or password</label>
+                    </#if>
+                    </#if>
                 </div>
             </div>
         </div>

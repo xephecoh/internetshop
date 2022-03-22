@@ -1,8 +1,9 @@
 package com.khamutov.web.servlets;
 
 import com.khamutov.entities.Product;
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.services.ProductService;
-import com.khamutov.templater.PageGenerator;
+import com.khamutov.web.templater.PageGenerator;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,18 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddProductServlet extends HttpServlet {
-    private final ProductService service;
+    private final ProductService service = ServiceLocator.get(ProductService.class);
 
-    public AddProductServlet(ProductService productService) {
-        this.service = productService;
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String id = req.getParameter("id");
+
         String name = req.getParameter("name");
-        String price = req.getParameter("price");
-        Product newProduct = new Product(Integer.parseInt(id), name, Integer.parseInt(price));
+        int price = Integer.parseInt(req.getParameter("price"));
+        Product newProduct = new Product(price,name);
         service.save(newProduct);
         resp.sendRedirect("/products");
     }

@@ -2,6 +2,7 @@ package com.khamutov.web.servlets;
 
 
 
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.services.ProductService;
 
 import javax.servlet.http.HttpServlet;
@@ -11,10 +12,8 @@ import java.io.IOException;
 
 
 public class DeleteProductServlet extends HttpServlet {
-    private final ProductService service;
-    public DeleteProductServlet(ProductService productService) {
-        this.service = productService;
-    }
+    private final ProductService service = ServiceLocator.get(ProductService.class);
+
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -1,11 +1,13 @@
 package com.khamutov.web.servlets;
 
+import com.khamutov.entities.CartItem;
 import com.khamutov.entities.Product;
+import com.khamutov.entities.Session;
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.services.CartService;
 import com.khamutov.services.ProductService;
-import com.khamutov.templater.PageGenerator;
+import com.khamutov.web.templater.PageGenerator;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,26 +15,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class ProductServlet extends HttpServlet {
-    private final ProductService service;
-    private final CartService cartService;
+    private final ProductService service = ServiceLocator.get(ProductService.class);
+    private final CartService cartService = ServiceLocator.get(CartService.class);
 
-    public ProductServlet(ProductService productService, CartService cartService) {
-        this.service = productService;
-        this.cartService = cartService;
-    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<Product> productList = service.getProductList();
-        Cookie[] cookies = req.getCookies();
-        Optional<String> userRole = Stream.of(cookies).filter(e -> e.getName().equals("userRole")).map(Cookie::getValue).findAny();
+        Session session = (Session) req.getAttribute("session");
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("products", productList);
-        userRole.ifPresent(s -> pageVariables.put("userRole", s));
+        pageVariables.put("userRole", session.getUserRole().toString());
         PageGenerator.getPage("products.html", pageVariables, resp.getWriter());
     }
 
@@ -40,24 +36,15 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<Product> productList = service.getProductList();
         String productName = req.getParameter("name");
-        String productPrice = req.getParameter("price");
-        Cookie[] cookies = req.getCookies();
+        int productPrice = Integer.parseInt(req.getParameter("price"));
+        CartItem cartItem = new CartItem(new Product(productPrice, productName), 1);
+        Session session = (Session) req.getAttribute("session");
+        cartService.addToCart(cartItem,session.getUserName());
+        List<CartItem> userCart = cartService.getUserCart(session.getUserName());
         Map<String, Object> pageVariables = new HashMap<>();
-        Optional<String> userRole = Stream.of(cookies)
-                .filter(e -> e.getName().equals("userRole"))
-                .map(Cookie::getValue)
-                .findAny();
-        Optional<String> userName = Stream.of(cookies)
-                .filter(e -> e.getName().equals("userName"))
-                .map(Cookie::getValue)
-                .findAny();
-        userName.ifPresent(s -> cartService.addToCart(s, productName, Integer.parseInt(productPrice)));
-        if (userName.isPresent()) {
-            List<Product> userCart = cartService.getUserCart(userName.get());
-            pageVariables.put("userCart", userCart);
-        }
+        pageVariables.put("userCart", userCart);
         pageVariables.put("products", productList);
-        userRole.ifPresent(role -> pageVariables.put("userRole", role));
+        pageVariables.put("userRole", session.getUserRole().toString());
         PageGenerator.getPage("products.html", pageVariables, resp.getWriter());
     }
 

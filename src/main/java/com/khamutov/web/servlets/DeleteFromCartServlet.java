@@ -1,13 +1,12 @@
 package com.khamutov.web.servlets;
 
+import com.khamutov.entities.Session;
 import com.khamutov.services.CartService;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.stream.Stream;
+
 
 public class DeleteFromCartServlet extends HttpServlet {
 
@@ -20,14 +19,9 @@ public class DeleteFromCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String productName = req.getParameter("productName");
-        Cookie[] cookies = req.getCookies();
-        Optional<String> userName = Stream.of(cookies)
-                .filter(e -> e.getName().equals("userName"))
-                .map(Cookie::getValue)
-                .findAny();
-        userName.ifPresent(name -> cartService.deleteProductFromCart(name, productName));
+        Session session = (Session) req.getAttribute("session");
+        String userName = session.getUserName();
+        cartService.deleteProductFromCart(userName, productName);
         resp.sendRedirect("/products");
     }
-
-
 }

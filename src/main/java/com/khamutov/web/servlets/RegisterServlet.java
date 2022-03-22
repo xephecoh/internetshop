@@ -1,7 +1,8 @@
 package com.khamutov.web.servlets;
 
+import com.khamutov.main.ServiceLocator;
 import com.khamutov.services.UserService;
-import com.khamutov.templater.PageGenerator;
+import com.khamutov.web.templater.PageGenerator;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,11 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterServlet extends HttpServlet {
-    private final UserService userService;
+    private final UserService userService = ServiceLocator.get(UserService.class);
 
-    public RegisterServlet(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {

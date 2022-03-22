@@ -1,5 +1,6 @@
 package com.khamutov.jdbc;
 
+import Utills.PasswordEncryptor;
 import com.khamutov.jdbc.dao.UserDao;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -12,7 +13,7 @@ import java.sql.*;
 public class JdbcUserDao implements UserDao {
     private final PGSimpleDataSource pgSimpleDataSource;
     private final static String GET_USER = "SELECT * FROM users WHERE user_name = ? AND user_password = ?";
-    private final static String INSERT_USER = "INSERT INTO users (id,user_name,user_password) VALUES (10,?,?)";
+    private final static String INSERT_USER = "INSERT INTO users (user_name,user_password) VALUES (?,?)";
     private final static String GET_USER_BY_NAME = "SELECT * FROM users WHERE user_name = ?";
     private final static String GET_USER_ROLE = "SELECT user_role FROM users WHERE user_name = ?";
 
@@ -26,41 +27,29 @@ public class JdbcUserDao implements UserDao {
         try (Connection connection = pgSimpleDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER)
         ) {
-            try {
-                MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-                messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
-                byte[] resultByteArray = messageDigest.digest();
-                StringBuilder stringBuilder = new StringBuilder();
-                for (byte b : resultByteArray) {
-                    stringBuilder.append(String.format("%02x", b));
-                }
-                boolean isValid = false;
-                statement.setString(1, name);
-                statement.setString(2, stringBuilder.toString());
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    isValid = true;
-                }
-                return isValid;
-
-            } catch (NoSuchAlgorithmException e) {
-                System.out.println(e.getMessage());
+            String encryptedPassword = PasswordEncryptor.encrypt(password);
+            boolean isValid = false;
+            statement.setString(1, name);
+            statement.setString(2, encryptedPassword);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                isValid = true;
             }
+            return isValid;
         } catch (SQLException e) {
-            throw new RuntimeException("Unable get user from db", e);
+            throw new RuntimeException("Unable get user from db ", e);
         }
-        return false;
     }
 
     @Override
     public void saveUser(String name, String password) {
         try (Connection connection = pgSimpleDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_USER);
-             PreparedStatement statement1 = connection.prepareStatement(GET_USER_BY_NAME)
+             PreparedStatement checkUserIfExistsStatement = connection.prepareStatement(GET_USER_BY_NAME)
         ) {
-            statement1.setString(1, name);
-            int rowsAffected = statement1.executeUpdate();
-            if (rowsAffected > 0) {
+            checkUserIfExistsStatement.setString(1, name);
+            ResultSet resultSet = checkUserIfExistsStatement.executeQuery();
+            if (resultSet.next()) {
                 throw new RuntimeException("User with name " + name + " already exists");
             }
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -72,9 +61,9 @@ public class JdbcUserDao implements UserDao {
             }
             statement.setString(1, name);
             statement.setString(2, stringBuilder.toString());
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException sqlException) {
-            System.out.println("Unable to save user with name " + name);
+            System.out.println("Unable to save user with name " + name + sqlException.getMessage());
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
         }
@@ -95,10 +84,9 @@ public class JdbcUserDao implements UserDao {
                     return userRole;
                 }
             }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("No user with name " + name);
         }
-        throw new RuntimeException("No user with name " + name);
     }
 }

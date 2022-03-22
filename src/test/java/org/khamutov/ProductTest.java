@@ -1,7 +1,7 @@
 package org.khamutov;
 
 import com.khamutov.entities.Product;
-import com.khamutov.jdbc.RowMapper;
+import com.khamutov.jdbc.ProductRowMapper;
 import com.khamutov.web.RequestBodyParser;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,14 +26,14 @@ public class ProductTest {
     @Test
     public void testRowMapper() throws SQLException {
         Product product = null;
-        RowMapper rowMapper = new RowMapper();
+        ProductRowMapper productRowMapper = new ProductRowMapper();
         ResultSet resultSetMock = Mockito.mock(ResultSet.class);
         Mockito.when(resultSetMock.getString("name")).thenReturn("Cellphone");
         Mockito.when(resultSetMock.getInt("id")).thenReturn(12);
         Mockito.when(resultSetMock.getInt("price")).thenReturn(99);
         Mockito.when(resultSetMock.next()).thenReturn(true).thenReturn(false);
         while (resultSetMock.next()) {
-            product = rowMapper.getProduct(resultSetMock);
+            product = productRowMapper.getProduct(resultSetMock);
         }
         Product expectProduct = new Product(12,"Cellphone",99);
         assert product != null;
