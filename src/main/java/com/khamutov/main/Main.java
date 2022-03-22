@@ -10,7 +10,7 @@ import com.khamutov.services.CartService;
 import com.khamutov.services.UserService;
 import com.khamutov.web.security.SecurityService;
 import com.khamutov.services.ProductService;
-/*import com.khamutov.web.security.TokenFilter;
+import com.khamutov.web.security.TokenFilter;
 import com.khamutov.web.servlets.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
@@ -52,18 +52,18 @@ public class Main {
         JdbcCartDao jdbcCartDao = new JdbcCartDao(dataSource);
         CartService cartService = new CartService(jdbcCartDao);
         ProductDao jdbcProductDao = new JdbcProductDao(dataSource);
-        SecurityService securityService = new SecurityService(userDao);
-        TokenFilter tokenFilter = new TokenFilter(securityService);
+        SecurityService securityService = new SecurityService();
+        TokenFilter tokenFilter = new TokenFilter();
         UserService userService = new UserService(userDao);
         ProductService productService = new ProductService(jdbcProductDao);
         ProductServlet productServlet = new ProductServlet();
-        DeleteProductServlet deleteProductServlet = new DeleteProductServlet(productService);
-        UpdateProductServlet updateProductServlet = new UpdateProductServlet(productService);
+        DeleteProductServlet deleteProductServlet = new DeleteProductServlet();
+        UpdateProductServlet updateProductServlet = new UpdateProductServlet();
         DeleteFromCartServlet deleteFromCartServlet = new DeleteFromCartServlet(cartService);
         LoginServlet loginServlet = new LoginServlet();
         ResourcesServlet resourcesServlet = new ResourcesServlet();
-        AddProductServlet addProductServlet = new AddProductServlet(productService);
-        RegisterServlet registerServlet = new RegisterServlet(userService);
+        AddProductServlet addProductServlet = new AddProductServlet();
+        RegisterServlet registerServlet = new RegisterServlet();
 
         executorService.scheduleWithFixedDelay(securityService, 0, 10, TimeUnit.SECONDS);
 
@@ -86,4 +86,4 @@ public class Main {
         server.setHandler(context);
         server.start();
     }
-}*/
+}

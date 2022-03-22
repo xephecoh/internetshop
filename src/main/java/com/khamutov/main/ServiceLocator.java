@@ -45,6 +45,7 @@ public class ServiceLocator {
     }
 
     public static <T> T get(Class<T> clazz) {
+        System.out.println("from locator");
         return clazz.cast(CONTEXT.get(clazz));
     }
 }

@@ -1,30 +1,37 @@
 package com.khamutov.web.templater;
 
+
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-
-import java.io.File;
+import freemarker.template.TemplateExceptionHandler;
 import java.io.IOException;
 import java.io.Writer;
+
 import java.util.Map;
 
 public class PageGenerator {
-    private static final String RESOURCES_PATH = "target/classes/webapp/WEB-INF/views";
-    private static final String PATH = String.valueOf(PageGenerator.class
-            .getResource("webapp/WEB-INF/views"))
-            .replace("file:/", "");;
 
+    private static final Configuration CONFIG = initConfiguration();
 
-    private static final Configuration CONFIG = new Configuration(Configuration.VERSION_2_3_19);
-
-    public static void getPage(String filename, Map<String, ?> data, Writer writer) {
+    public static void getPage(String fileName, Map<String, Object> data, Writer writer) {
         try {
-            System.out.println(PATH);
-            Template template = CONFIG.getTemplate(RESOURCES_PATH + File.separator + filename);
+            Template template = CONFIG.getTemplate(fileName);
             template.process(data, writer);
-        } catch (TemplateException | IOException e) {
-            throw new RuntimeException("Failed to generate page: " + filename, e);
+        } catch (IOException | TemplateException e) {
+            throw new RuntimeException("Cannot generate page " + fileName, e);
         }
     }
+
+    private static Configuration initConfiguration() {
+        Configuration config = new Configuration(Configuration.VERSION_2_3_31);
+        final ClassTemplateLoader loader = new ClassTemplateLoader(PageGenerator.class, "/views" );
+        config.setTemplateLoader(loader);
+        config.setDefaultEncoding("UTF-8");
+        config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        return config;
+    }
+
+
 }
