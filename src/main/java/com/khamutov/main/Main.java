@@ -1,7 +1,7 @@
 package com.khamutov.main;
 
 import com.khamutov.configuration.PropertiesReader;
-import com.khamutov.jdbc.JdbcCartDao;
+import com.khamutov.dao.jdbc.JdbcCartDao;
 import com.khamutov.services.CartService;
 import com.khamutov.web.security.AdminFilter;
 import com.khamutov.web.security.SecurityService;

@@ -1,6 +1,6 @@
 package com.khamutov.services;
 
-import com.khamutov.jdbc.dao.ProductDao;
+import com.khamutov.dao.ProductDao;
 import com.khamutov.entities.Product;
 
 import java.util.List;

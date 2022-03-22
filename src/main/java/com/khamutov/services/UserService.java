@@ -1,7 +1,7 @@
 package com.khamutov.services;
 
 import Utills.PasswordEncryptor;
-import com.khamutov.jdbc.dao.UserDao;
+import com.khamutov.dao.UserDao;
 
 
 public class UserService {

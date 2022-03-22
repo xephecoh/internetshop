@@ -1,12 +1,12 @@
 package com.khamutov.main;
 
 import com.khamutov.configuration.PropertiesReader;
-import com.khamutov.jdbc.JdbcCartDao;
-import com.khamutov.jdbc.JdbcProductDao;
-import com.khamutov.jdbc.JdbcUserDao;
-import com.khamutov.jdbc.dao.CartDao;
-import com.khamutov.jdbc.dao.ProductDao;
-import com.khamutov.jdbc.dao.UserDao;
+import com.khamutov.dao.jdbc.JdbcCartDao;
+import com.khamutov.dao.jdbc.JdbcProductDao;
+import com.khamutov.dao.jdbc.JdbcUserDao;
+import com.khamutov.dao.CartDao;
+import com.khamutov.dao.ProductDao;
+import com.khamutov.dao.UserDao;
 import com.khamutov.services.CartService;
 import com.khamutov.services.ProductService;
 import com.khamutov.services.UserService;

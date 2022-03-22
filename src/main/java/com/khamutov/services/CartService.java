@@ -1,8 +1,7 @@
 package com.khamutov.services;
 
 import com.khamutov.entities.CartItem;
-import com.khamutov.entities.Product;
-import com.khamutov.jdbc.dao.CartDao;
+import com.khamutov.dao.CartDao;
 
 import java.util.List;
 

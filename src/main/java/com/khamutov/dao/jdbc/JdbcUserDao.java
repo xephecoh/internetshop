@@ -1,12 +1,8 @@
-package com.khamutov.jdbc;
+package com.khamutov.dao.jdbc;
 
-import Utills.PasswordEncryptor;
-import com.khamutov.jdbc.dao.UserDao;
+import com.khamutov.dao.UserDao;
 import org.postgresql.ds.PGSimpleDataSource;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 

@@ -1,7 +1,8 @@
-package com.khamutov.jdbc;
+package com.khamutov.dao.jdbc;
 
 import com.khamutov.entities.Product;
 import org.postgresql.ds.PGSimpleDataSource;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

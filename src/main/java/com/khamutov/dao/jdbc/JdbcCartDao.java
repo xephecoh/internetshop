@@ -1,9 +1,10 @@
-package com.khamutov.jdbc;
+package com.khamutov.dao.jdbc;
 
 
 import com.khamutov.entities.CartItem;
-import com.khamutov.jdbc.dao.CartDao;
+import com.khamutov.dao.CartDao;
 import org.postgresql.ds.PGSimpleDataSource;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
