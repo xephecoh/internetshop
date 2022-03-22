@@ -1,5 +1,6 @@
 package com.khamutov.services;
 
+import Utills.PasswordEncryptor;
 import com.khamutov.jdbc.dao.UserDao;
 
 
@@ -11,12 +12,13 @@ public class UserService {
     }
 
     public void saveUser(String name,String password){
-        userDao.saveUser(name,password);
+        String saltedPass = PasswordEncryptor.encrypt(password);
+        userDao.saveUser(name,saltedPass);
     }
 
     public boolean isUserValid(String name,String password){
-        System.out.println("inside user service");
-        return userDao.isUserValid(name,password);
+        String saltedPass = PasswordEncryptor.encrypt(password);
+        return userDao.isUserValid(name,saltedPass);
     }
     public String getUserRole(String name){
         return userDao.getUserRole(name);

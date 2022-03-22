@@ -27,10 +27,9 @@ public class JdbcUserDao implements UserDao {
         try (Connection connection = pgSimpleDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER)
         ) {
-            String encryptedPassword = PasswordEncryptor.encrypt(password);
             boolean isValid = false;
             statement.setString(1, name);
-            statement.setString(2, encryptedPassword);
+            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 isValid = true;
@@ -52,20 +51,11 @@ public class JdbcUserDao implements UserDao {
             if (resultSet.next()) {
                 throw new RuntimeException("User with name " + name + " already exists");
             }
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(password.getBytes(StandardCharsets.UTF_8));
-            byte[] resultByteArray = messageDigest.digest();
-            StringBuilder stringBuilder = new StringBuilder();
-            for (byte b : resultByteArray) {
-                stringBuilder.append(String.format("%02x", b));
-            }
             statement.setString(1, name);
-            statement.setString(2, stringBuilder.toString());
+            statement.setString(2, password);
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             System.out.println("Unable to save user with name " + name + sqlException.getMessage());
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
         }
     }
 

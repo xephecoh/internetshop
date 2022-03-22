@@ -68,28 +68,28 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>tokenFilter</filter-name>
-        <filter-class>com.khamutov.web.security.TokenFilter</filter-class>
+        <filter-name>adminFilter</filter-name>
+        <filter-class>com.khamutov.web.security.AdminFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>tokenFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/products</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>tokenFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/add</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>tokenFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/addToCart</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>tokenFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/update</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>tokenFilter</filter-name>
+        <filter-name>adminFilter</filter-name>
         <url-pattern>/deleteFromCart</url-pattern>
     </filter-mapping>
 </web-app>

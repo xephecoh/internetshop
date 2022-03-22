@@ -48,9 +48,10 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>price</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -63,7 +64,7 @@
             <form id="deleteForm"> <!--action="/delete" method="POST"-->
                 <input type="hidden" name="id" value="${product.id}" id="id">
                 <#if userRole == 'ADMIN'>
-                <input type="submit" class="btn btn-danger" value="Delete" name="btn"
+                <input type="submit" class="btn btn-danger m-1 pb-1" value="Delete" name="btn"
                        onclick="if(!(confirm('Are you sure you want delete this product'))) return false"></form>
                 </#if>
             <form action="/update" method="POST">
@@ -71,7 +72,7 @@
                 <input type="hidden" value="${product.name}" name="name">
                 <input type="hidden" value="${product.price}" name="price">
                 <#if userRole == 'ADMIN'>
-                <input type="submit" class="btn btn-primary" id="updateButton"  value="Update" name="updateButton"></form>
+                <input type="submit" class="btn btn-primary m-1 pb-1 " id="updateButton"  value="Update" name="updateButton"></form>
                 </#if>
             <form action="/products" method="POST">
                 <input type="hidden" value="${product.id}" name="id">

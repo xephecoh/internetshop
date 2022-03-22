@@ -32,20 +32,19 @@ public class ServiceLocator {
         ProductDao jdbcProductDao = new JdbcProductDao(dataSource);
         CartDao jdbcCartDao = new JdbcCartDao(dataSource);
 
-        SecurityService securityService = new SecurityService();
         UserService userService = new UserService(userDao);
-        ProductService productService = new ProductService(jdbcProductDao);
-        CartService cartService = new CartService(jdbcCartDao);
-
-        CONTEXT.put(ProductService.class, productService);
-        CONTEXT.put(CartService.class, cartService);
-        CONTEXT.put(SecurityService.class, securityService);
         CONTEXT.put(UserService.class, userService);
+        SecurityService securityService = new SecurityService();
+        CONTEXT.put(SecurityService.class, securityService);
+        ProductService productService = new ProductService(jdbcProductDao);
+        CONTEXT.put(ProductService.class, productService);
+        CartService cartService = new CartService(jdbcCartDao);
+        CONTEXT.put(CartService.class, cartService);
+
 
     }
 
     public static <T> T get(Class<T> clazz) {
-        System.out.println("from locator");
         return clazz.cast(CONTEXT.get(clazz));
     }
 }

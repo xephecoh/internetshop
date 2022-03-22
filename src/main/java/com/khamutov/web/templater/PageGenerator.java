@@ -32,6 +32,4 @@ public class PageGenerator {
         config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         return config;
     }
-
-
 }

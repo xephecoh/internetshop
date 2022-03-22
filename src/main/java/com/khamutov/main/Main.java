@@ -2,15 +2,10 @@ package com.khamutov.main;
 
 import com.khamutov.configuration.PropertiesReader;
 import com.khamutov.jdbc.JdbcCartDao;
-import com.khamutov.jdbc.dao.UserDao;
-import com.khamutov.jdbc.JdbcProductDao;
-import com.khamutov.jdbc.dao.ProductDao;
-import com.khamutov.jdbc.JdbcUserDao;
 import com.khamutov.services.CartService;
-import com.khamutov.services.UserService;
+import com.khamutov.web.security.AdminFilter;
 import com.khamutov.web.security.SecurityService;
-import com.khamutov.services.ProductService;
-import com.khamutov.web.security.TokenFilter;
+import com.khamutov.web.security.UserFilter;
 import com.khamutov.web.servlets.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
@@ -48,14 +43,10 @@ public class Main {
 
 
 
-        UserDao userDao = new JdbcUserDao(dataSource);
+
         JdbcCartDao jdbcCartDao = new JdbcCartDao(dataSource);
         CartService cartService = new CartService(jdbcCartDao);
-        ProductDao jdbcProductDao = new JdbcProductDao(dataSource);
         SecurityService securityService = new SecurityService();
-        TokenFilter tokenFilter = new TokenFilter();
-        UserService userService = new UserService(userDao);
-        ProductService productService = new ProductService(jdbcProductDao);
         ProductServlet productServlet = new ProductServlet();
         DeleteProductServlet deleteProductServlet = new DeleteProductServlet();
         UpdateProductServlet updateProductServlet = new UpdateProductServlet();
@@ -64,16 +55,18 @@ public class Main {
         ResourcesServlet resourcesServlet = new ResourcesServlet();
         AddProductServlet addProductServlet = new AddProductServlet();
         RegisterServlet registerServlet = new RegisterServlet();
+        AdminFilter adminFilter = new AdminFilter();
+        UserFilter userFilter = new UserFilter();
 
         executorService.scheduleWithFixedDelay(securityService, 0, 10, TimeUnit.SECONDS);
 
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addFilter(new FilterHolder(tokenFilter), "/update", EnumSet.of(DispatcherType.REQUEST));
-        context.addFilter(new FilterHolder(tokenFilter), "/delete", EnumSet.of(DispatcherType.REQUEST));
-        context.addFilter(new FilterHolder(tokenFilter), "/products", EnumSet.of(DispatcherType.REQUEST));
-        context.addFilter(new FilterHolder(tokenFilter), "/add", EnumSet.of(DispatcherType.REQUEST));
-        context.addFilter(new FilterHolder(tokenFilter), "/deleteFromCart", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(adminFilter), "/update", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(adminFilter), "/delete", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(userFilter), "/products", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(adminFilter), "/add", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(userFilter), "/deleteFromCart", EnumSet.of(DispatcherType.REQUEST));
         context.addServlet(new ServletHolder(updateProductServlet), "/update");
         context.addServlet(new ServletHolder(deleteProductServlet), "/delete");
         context.addServlet(new ServletHolder(productServlet), "/products");
